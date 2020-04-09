@@ -8,5 +8,8 @@ export const retrieve =
 export const retrieved =
     createAction('[GROUPS] Retrieved', props<{rootGroup: Group}>());
 
+export const select =
+    createAction('[GROUPS] Select', props<{selectedGroup: Group}>());
+
 // when the reset action is dispatched, the initial state will be restored
 export const reset = createAction('[GROUPS] Reset');

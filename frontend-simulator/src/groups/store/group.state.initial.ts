@@ -1,5 +1,6 @@
 import {GroupState} from './group.state';
 
 export const initialGroupState: GroupState = {
-  rootGroup: undefined
+  rootGroup: undefined,
+  currentGroup: undefined
 };

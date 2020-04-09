@@ -1,11 +1,12 @@
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Component, OnInit } from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {filter, take, tap} from 'rxjs/operators';
 
 import {WebsocketSubject} from '../websocket/websocket-subject';
 
 import {AppState} from './store/app.state';
+import { Group } from 'src/groups/group.model';
 
 @Component({
   selector: 'cockpit-root',
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
    * ngOnInit()
    */
   ngOnInit() {
-    // console.log('ngOnInit()');
+    console.log('AppComponent - ngOnInit()');
 
     // the url to post to
     const loginUrl = 'http://127.0.0.1:8080/basic/api/webapp/login';
@@ -92,7 +93,7 @@ export class AppComponent implements OnInit {
       // console.log('WS ', payload);
     });
 
-    // load root group
+    // load root group (building structure)
     this.store.dispatch({ type: '[GROUPS] Retrieve' });
 
     // load devices
@@ -101,8 +102,14 @@ export class AppComponent implements OnInit {
     // load templates
     this.store.dispatch({ type: '[TEMPLATES] Retrieve' });
 
+    // test: select a group
+    const group = new Group();
+    group.id = 123;
+    group.description = 'dddddescription';
+    this.store.dispatch({ type: '[GROUPS] Select', selectedGroup: group });
+
     // output the complete store state for debugging
     this.store.select<AppState>((state: AppState) => state)
-        .subscribe((completeState: AppState) => console.log(completeState));
+        .subscribe((appState: AppState) => console.log('appState: ', appState));
   }
 }

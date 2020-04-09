@@ -17,9 +17,9 @@ const internalTemplateReducer = createReducer(
     // the action 'retrieved' is thrown from the group-effect which uses a
     // service to retrieve data from the backend
     on(retrieved,
-       (_, action) => {
+       (state, action) => {
          console.log('reducer ', action);
-         return {templates: action.templates};
+         return {...state, templates: action.templates};
        }),
 
     // the reset action restores the initial state

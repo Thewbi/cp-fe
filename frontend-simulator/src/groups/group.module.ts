@@ -7,7 +7,8 @@ import {groupReducer} from './store/group.reducer';
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('groups', {GroupState: groupReducer}),
+    //StoreModule.forFeature('groups', {GroupState: groupReducer}),
+    StoreModule.forFeature('groups', groupReducer),
     EffectsModule.forFeature([GroupEffects])
   ],
   exports: [],

@@ -10,7 +10,6 @@ import {Device, DeviceCacheStatus, HomeDevice} from '../device.model';
  * store state.
  */
 export interface DeviceState {
-  // loading: boolean;
   devices: Device[];
   templatesAssigned: boolean;
   cacheStatus: DeviceCacheStatus;

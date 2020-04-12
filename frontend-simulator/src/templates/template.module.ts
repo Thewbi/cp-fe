@@ -7,7 +7,6 @@ import {templateReducer} from './store/template.reducer';
 
 @NgModule({
   imports: [
-    //StoreModule.forFeature('templates', {TemplateState: templateReducer}),
     StoreModule.forFeature('templates', templateReducer),
     EffectsModule.forFeature([TemplateEffects])
   ],

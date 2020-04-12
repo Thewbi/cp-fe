@@ -1,3 +1,4 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {EffectsModule} from '@ngrx/effects';  // npm install @ngrx/effects --save
 import {StoreModule} from '@ngrx/store';      // npm install @ngrx/store
@@ -8,8 +9,7 @@ import {deviceReducer} from './store/device.reducer';
 
 @NgModule({
   imports: [
-    //StoreModule.forFeature('devices', {DeviceState: deviceReducer}),
-    StoreModule.forFeature('devices', deviceReducer),
+    CommonModule, StoreModule.forFeature('devices', deviceReducer),
     EffectsModule.forFeature([DeviceEffects])
   ],
   exports: [GroupDeviceTableComponentComponent],

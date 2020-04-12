@@ -1,14 +1,44 @@
-import { isNil } from 'lodash';
-import { Device } from '../devices/device.model';
+import {isNil} from 'lodash';
+import {Device} from '../devices/device.model';
 
 export interface TemplateState {
   loading: boolean;
   templates: Template[];
 }
 
-export class Action {
-  public name: string;
-  public targetValue: any;
+/**
+ * A Device describes a real device instance in the real world (RWS with CAN
+ * address 1) A Device is connected to a Template.
+ *
+ * A Template describes one or more LogicalDevices. That means a Device acts as
+ * one or more than one LogicalDevice, depending on which Template was assigned
+ * to the Device.
+ *
+ * A LogicalDevice has Properties > State > Action.
+ */
+export class Template {
+  public productId: string;
+  public productVariation: string;
+  public protocolType: string;
+  public translationKey: string;
+  public logicalDevices: LogicalDevice[] = [];
+
+  get id() {
+    return `${this.productId}->${this.productVariation}`;
+  }
+
+  constructor(template?: Template) {
+    if (template) {
+      this.productId = template.productId;
+      this.protocolType = template.protocolType;
+      this.translationKey = template.translationKey;
+      this.productVariation = template.productVariation;
+      this.logicalDevices = [];
+      template.logicalDevices.forEach((l: LogicalDevice) => {
+        this.logicalDevices.push(new LogicalDevice(l));
+      });
+    }
+  }
 }
 
 export class LogicalDevice {
@@ -17,7 +47,7 @@ export class LogicalDevice {
   public translationKey: string;
   public properties: Property[] = [];
   // ui
-  public updated: boolean = false;
+  public updated = false;
   public color: {} = {};
 
   constructor(l?: LogicalDevice) {
@@ -43,9 +73,14 @@ export class LogicalDevice {
 }
 
 export class WrappedLogicalDevice extends LogicalDevice {
-  public isOnline: boolean = false;
-  public isTemplateOk: boolean = false;
+  public isOnline = false;
+  public isTemplateOk = false;
 
+  /**
+   *
+   * @param l The LogicalDevice defined by a Template.
+   * @param d The real Device instance from the device model.
+   */
   constructor(l?: LogicalDevice, d?: Device) {
     super(l);
     if (!isNil(d)) {
@@ -90,7 +125,8 @@ export class State {
   public action: Action;
   public toggle: boolean;
   // ui only
-  public active: boolean;
+  // public active: boolean;
+  public active = false;
   public blocked: boolean;
   /**
    * preActive is set after executing an action of an inactive state.
@@ -134,27 +170,7 @@ export class SelectableState extends State {
   }
 }
 
-export class Template {
-  public productId: string;
-  public productVariation: string;
-  public protocolType: string;
-  public translationKey: string;
-  public logicalDevices: LogicalDevice[] = [];
-
-  get id() {
-    return `${this.productId}->${this.productVariation}`;
-  }
-
-  constructor(template?: Template) {
-    if (template) {
-      this.productId = template.productId;
-      this.protocolType = template.protocolType;
-      this.translationKey = template.translationKey;
-      this.productVariation = template.productVariation;
-      this.logicalDevices = [];
-      template.logicalDevices.forEach((l: LogicalDevice) => {
-        this.logicalDevices.push(new LogicalDevice(l));
-      });
-    }
-  }
+export class Action {
+  public name: string;
+  public targetValue: any;
 }

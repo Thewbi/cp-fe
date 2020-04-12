@@ -1,8 +1,23 @@
 <p>group-device-table-component works!</p>
 
-asfasfas
-fsda
-    af
-    sad
-    safasdf
+<h2>Devices</h2>
+<div *ngFor="let device of (devices | async)">
+    <div><b>GUID:</b> {{ device.guid }}</div>
+    <div><b>Device:</b> {{ device.description }}</div>
+    <div><b>ProductId:</b> {{ device.productId }}</div>
+    <div><b>TemplateId:</b> {{ device.templateId }}</div>
+    <div><b>Template:</b> {{ device.template.productId }}</div>
 
+    <div *ngFor="let logicalDevice of (device.template.logicalDevices)">
+        <b>LogicalDevice:</b> {{logicalDevice.id}} {{logicalDevice.icon}}
+
+        <div *ngFor="let property of (logicalDevice.properties)">
+            <b>Property:</b> {{property.id}} {{property.type}}
+
+            <div *ngFor="let state of (property.states)">
+                <b>State:</b> {{state.translationKey}} {{state.active}} {{state.icon}}
+            </div>
+        </div>
+    </div>
+
+</div>

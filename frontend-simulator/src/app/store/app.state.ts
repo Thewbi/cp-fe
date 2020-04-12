@@ -1,8 +1,9 @@
-import { GroupState } from 'src/groups/store/group.state';
+/* tslint:disable */
 
 /**
- * This interface will be extended by the modules of the application.
+ * This interface will be extended by the individual modules of the application.
  */
 export interface AppState {
-    groups: GroupState;
 }
+
+/* tslint:enable */

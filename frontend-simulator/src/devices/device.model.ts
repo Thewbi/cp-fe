@@ -1,33 +1,4 @@
-import { Template } from '../templates/template.model';
-
-export class DevicePropertyOption {
-  public label: string;
-  public value: string;
-}
-
-export class DeviceProperty {
-  public id: string;
-  public description: string;
-  public guid: string;
-  public unit: string;
-  public dco: string;
-  public min: number;
-  public max: number;
-  public key: string;
-  public type: string;
-  public name: string;
-  public readable: boolean;
-  public writable: boolean;
-  public observable: boolean;
-  public valueOptions: DevicePropertyOption[];
-  public options: DevicePropertyOption[];
-  public value: any;
-}
-
-export type DeviceStatus = 'UNKNOWN'|'REMOVED'|'NOT_INITIALIZED'|'OFFLINE'|
-    'ONLINE'|'INITIALIZING'|'CONFIGURED'|'REMOVING';
-
-export type ProtocolAdapter = 'CAN'|'BACNET'|'BACnet'|'ICP';
+import {Template} from '../templates/template.model';
 
 export class Device {
   public guid: string;
@@ -48,11 +19,40 @@ export class Device {
   public properties: DeviceProperty[];
   public climateZoneId: string;
   // ui
-  template: Template;
+  public template: Template;
+}
+
+export type DeviceStatus = 'UNKNOWN'|'REMOVED'|'NOT_INITIALIZED'|'OFFLINE'|
+    'ONLINE'|'INITIALIZING'|'CONFIGURED'|'REMOVING';
+
+export type ProtocolAdapter = 'CAN'|'BACNET'|'BACnet'|'ICP';
+
+export class DeviceProperty {
+  public id: string;
+  public description: string;
+  public guid: string;
+  public unit: string;
+  public dco: string;
+  public min: number;
+  public max: number;
+  public key: string;
+  public type: string;
+  public name: string;
+  public readable: boolean;
+  public writable: boolean;
+  public observable: boolean;
+  public valueOptions: DevicePropertyOption[];
+  public options: DevicePropertyOption[];
+  public value: any;
+}
+
+export class DevicePropertyOption {
+  public label: string;
+  public value: string;
 }
 
 export class SelectableDevice extends Device {
-  public selected: boolean = false;
+  public selected = false;
 }
 
 export class DeviceMetadata {
@@ -85,6 +85,8 @@ export class HomeDevice {
   public status: DeviceStatus;
   public protocolAdapter: ProtocolAdapter;
   public properties: any;
+  // ui
+  public template: Template;
 }
 
 export class DeviceClassObject {

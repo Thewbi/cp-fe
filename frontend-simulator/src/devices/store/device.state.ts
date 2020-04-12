@@ -15,3 +15,15 @@ export interface DeviceState {
   cacheStatus: DeviceCacheStatus;
   selectedHomeDevice: HomeDevice;
 }
+
+/**
+ * Each module extends the global store state by it's individual slice.
+ * This is done in a modular fashion so that inidividual feature modules can be
+ * removed without hurting other feature modules.
+ */
+declare module 'src/app/store/app.state' {
+  export interface AppState {
+    // add the device slice to the global store
+    devices: DeviceState;
+  }
+}

@@ -1,19 +1,31 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, map, mergeMap, tap} from 'rxjs/operators';
 
 import {TemplateService} from '../service/template.service';
-import {retrieve, retrieved} from './template.actions';
+
+import {retrieveAction, retrievedAction} from './template.actions';
 
 @Injectable()
 export class TemplateEffects {
-  constructor(private actions$: Actions, private templateService: TemplateService) {}
+  /**
+   * ctor
+   *
+   * @param actions$ all actions that travel through the application.
+   * @param templateService template REST API interaction.
+   */
+  constructor(
+      private actions$: Actions, private templateService: TemplateService) {}
+
+  /**
+   * Effect for retrieving templates.
+   */
   loadTemplate$ = createEffect(
       () => this.actions$.pipe(
-          ofType(retrieve),
+          ofType(retrieveAction),
           mergeMap(
               () => this.templateService.getTemplates().pipe(
-                  map(templates => ({type: retrieved.type, templates})),
+                  map(templates => (retrievedAction({templates}))),
                   catchError(() => EMPTY)))));
 }

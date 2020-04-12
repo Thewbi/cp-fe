@@ -2,14 +2,14 @@ import {createAction, props} from '@ngrx/store';
 import {Group} from '../group.model';
 
 // call the ngrx createAction() method to create an action for loading groups
-export const retrieve =
+export const retrieveAction =
     createAction('[GROUPS] Retrieve', props<{rootGroup: Group}>());
 
-export const retrieved =
+export const retrievedAction =
     createAction('[GROUPS] Retrieved', props<{rootGroup: Group}>());
 
-export const select =
+export const selectAction =
     createAction('[GROUPS] Select', props<{selectedGroup: Group}>());
 
 // when the reset action is dispatched, the initial state will be restored
-export const reset = createAction('[GROUPS] Reset');
+export const resetAction = createAction('[GROUPS] Reset');

@@ -19,7 +19,7 @@ const internalDeviceReducer = createReducer(
     // service to retrieve data from the backend
     on(retrievedAction,
        (state, action) => {
-         console.log('reducer ', action);
+         // console.log('reducer ', action);
          return {...state, devices: action.devices};
        }),
 

@@ -1,0 +1,7 @@
+<p>device-list</p>
+
+
+
+<div *ngFor="let device of (devices | async)">
+    <div (click)="elementClick(device)"><b>GUID:</b> {{ device.guid }}</div>
+</div>

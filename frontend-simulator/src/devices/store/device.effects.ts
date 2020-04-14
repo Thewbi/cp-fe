@@ -58,7 +58,7 @@ export class DeviceEffects {
 
                   // map(devices => ({type: retrieved.type, devices})),
                   map(devices => {
-                    console.log(devices);
+                    // console.log(devices);
 
                     return retrievedAction({devices});
                   }),

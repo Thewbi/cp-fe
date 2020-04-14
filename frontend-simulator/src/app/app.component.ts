@@ -6,13 +6,10 @@ import {filter, take, tap} from 'rxjs/operators';
 import {Device} from 'src/devices/device.model';
 import {changedAction} from 'src/devices/store/device.actions';
 import {changedEventAction} from 'src/devices/store/device.actions';
-import {getDeviceByIdSelector} from 'src/devices/store/device.selector';
 import {Group} from 'src/groups/group.model';
 import {selectAction} from 'src/groups/store/group.actions';
-import {retrieveAction} from 'src/groups/store/group.actions';
-import {getCurrentGroupSelector, getGroupStateSelector} from 'src/groups/store/group.selector';
+import {getGroupStateSelector} from 'src/groups/store/group.selector';
 import {GroupState} from 'src/groups/store/group.state';
-import {Notification} from 'src/notifications/notification.model';
 import {PushEventDto} from 'src/notifications/notification.model';
 
 import {WebsocketSubject} from '../websocket/websocket-subject';
@@ -27,7 +24,7 @@ import {AppState} from './store/app.state';
 export class AppComponent implements OnInit {
   title = 'frontend-simulator';
 
-  public ws$: WebsocketSubject<any>;
+  public ws: WebsocketSubject<any>;
 
   /**
    * ctor
@@ -64,6 +61,7 @@ export class AppComponent implements OnInit {
             loginUrl, usernamePasswordCredentials,
             httpOptions)
         .pipe(
+
             tap(  // Log the result or error
                 data => {
                     // console.log(data);
@@ -71,7 +69,10 @@ export class AppComponent implements OnInit {
                 error => {
                   console.log(error);
                 }),
-            take(1), tap((response: HttpResponse<string>) => {
+
+            take(1),
+
+            tap((response: HttpResponse<string>) => {
               // console.log(response);
 
               // if (!(response instanceof Response) && response.body !==
@@ -94,17 +95,16 @@ export class AppComponent implements OnInit {
             });
 
     // connect to the websocket
-    this.ws$ = new WebsocketSubject('ws://127.0.0.1:8080/basic/push');
+    this.ws = new WebsocketSubject('ws://127.0.0.1:8080/basic/push');
 
     // handle incoming websocket messages:
-    this.ws$.pipe(filter(event => event !== undefined)).subscribe(event => {
+    this.ws.pipe(filter(event => event !== undefined)).subscribe(event => {
       // cast to type
       const pushEventDto = event as PushEventDto;
 
       // DEBUG: log
       // console.log('WS ', event);
       // console.log(pushEventDto);
-
 
       // // subscribe to all changes of the device!
       // this.store.select(getDeviceByIdSelector, {guid:
@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
       //       this.eventForDevice(device, pushEventDto);
       //     });
 
-
       // const deviceObservable = this.store.select(
       //     getDeviceByIdSelector, {guid: pushEventDto.event.guid});
       // const deviceObservableSubscription =
@@ -121,7 +120,6 @@ export class AppComponent implements OnInit {
       //       this.eventForDevice(device, pushEventDto);
       //     });
       // deviceObservableSubscription.unsubscribe();
-
 
       this.store.dispatch(changedEventAction({pushEventDto}));
     });

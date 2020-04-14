@@ -1,6 +1,38 @@
-<p>group-device-table-component works!</p>
+<p>group-device-table-component</p>
 
 <h2>Devices</h2>
+
+<table style="width:100%">
+
+    <tr>
+        <th>GUID</th>
+        <th>Device</th>
+        <th>ProductId</th>
+        <th>TemplateId</th>
+        <th>Template</th>
+        <th>LogicalDevice</th>
+        <th>Property</th>
+        <th>State</th>
+    </tr>
+
+    <tr *ngFor="let deviceRow of (deviceRows | async)">
+
+
+
+        <td>{{deviceRow.guid}}</td>
+        <td>{{deviceRow.device}}</td>
+        <td>{{deviceRow.productId}}</td>
+        <td>{{deviceRow.templateId}}</td>
+        <td>{{deviceRow.template}}</td>
+        <td>{{deviceRow.logicalDevice}}</td>
+        <td>{{deviceRow.property}}</td>
+        <td>{{deviceRow.state}}</td>
+    </tr>
+
+</table>
+
+
+<!--
 <div *ngFor="let device of (devices | async)">
     <div><b>GUID:</b> {{ device.guid }}</div>
     <div><b>Device:</b> {{ device.description }}</div>
@@ -21,3 +53,4 @@
     </div>
 
 </div>
+-->
